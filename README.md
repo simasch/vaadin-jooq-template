@@ -1,38 +1,37 @@
 # Vaadin/jOOQ Template
+
 Template Project that shows how to integrate Vaadin and jOOQ.
-Furthermore, Testcontainers, for generating the jOOQ classes and testing and Flyway for database migration are used.  
+
+It uses Testcontainers, for generating the jOOQ classes and integration testing and Flyway for the database migrations.  
 
 This project can be used as a starting point to create your own Vaadin application with jOOQ.
-It contains all the necessary configuration and some placeholder files to get you started.
-
-## Testing the application
-
-Karibu Testing and Playwright will be used in the future.
+It contains all the necessary configuration and some examples to get you started.
 
 ## Running the application
 
-The project is a standard Maven project. To run it from the command line,
-type `mvnw` (Windows), or `./mvnw` (Mac & Linux), then open
-http://localhost:8080 in your browser.
+To run the application with a database started by Testcontainers simply start from your IDE `TestVjApplication`. 
 
-You can also import the project to your IDE of choice as you would with any
-Maven project. Read more on [how to import Vaadin projects to different IDEs](https://vaadin.com/docs/latest/guide/step-by-step/importing) (Eclipse, IntelliJ IDEA, NetBeans, and VS Code).
+***Important:***
+This class uses the [Spring Boot Testcontainers support](https://spring.io/blog/2023/06/23/improved-testcontainers-support-in-spring-boot-3-1/) introduced with Spring Boot 3.1. Therefor you'll [Docker](https://www.docker.com) or [Testcontainers Cloud](https://testcontainers.com/cloud/) must run on your local computer
+
+## Testing the application
+
+[Karibu Testing](https://github.com/mvysny/karibu-testing) and [Playwright](https://playwright.dev) will be used in the future.
 
 ## Deploying to Production
 
 To create a production build, call `mvnw clean package -Pproduction` (Windows),
 or `./mvnw clean package -Pproduction` (Mac & Linux).
+
 This will build a JAR file with all the dependencies and front-end resources,
 ready to be deployed. The file can be found in the `target` folder after the build completes.
 
 Once the JAR file is built, you can run it using
-`java -jar target/vaadin-jooq-template-1.0-SNAPSHOT.jar`
+`java -jar target/vaadin-jooq-template-<version>.jar`
 
 ## Project structure
 
-- `MainLayout.java` in `src/main/java` contains the navigation setup (i.e., the
-  side/top bar and the main menu). This setup uses
-  [App Layout](https://vaadin.com/docs/components/app-layout).
+- `layout/MainLayout.java` in `src/main/java` contains the navigation setup (i.e., the side/top bar and the main menu). This setup uses [App Layout](https://vaadin.com/docs/components/app-layout).
 - `views` package in `src/main/java` contains the server-side Java views of your application.
 - `themes` folder in `frontend/` contains the custom CSS styles.
 
@@ -40,17 +39,21 @@ Once the JAR file is built, you can run it using
 
 ### Vaadin
 
+- Checkout the [Vaadin Developer Portal](https://vaadin.com/developers)
 - Read the documentation at [vaadin.com/docs](https://vaadin.com/docs).
-- Follow the tutorial at [vaadin.com/docs/latest/tutorial/overview](https://vaadin.com/docs/latest/tutorial/overview).
 - Create new projects at [start.vaadin.com](https://start.vaadin.com/).
-- Search UI components and their usage examples at [vaadin.com/docs/latest/components](https://vaadin.com/docs/latest/components).
-- View use case applications that demonstrate Vaadin capabilities at [vaadin.com/examples-and-demos](https://vaadin.com/examples-and-demos).
-- Build any UI without custom CSS by discovering Vaadin's set of [CSS utility classes](https://vaadin.com/docs/styling/lumo/utility-classes). 
 - Find a collection of solutions to common use cases at [cookbook.vaadin.com](https://cookbook.vaadin.com/).
 - Find add-ons at [vaadin.com/directory](https://vaadin.com/directory).
-- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/vaadin) or join our [Discord channel](https://discord.gg/MYFq5RTbBn).
-- Report issues, create pull requests in [GitHub](https://github.com/vaadin).
 
 ### jOOQ
 
 - Read the documentation at [jooq.org/learn](https://www.jooq.org/learn/).
+- Browse the [Blog](https://blog.jooq.org)
+
+### Spring Boot
+
+- Explore the [Spring Boot project page](https://spring.io/projects/spring-boot/) 
+
+### Testcontainers
+
+ - Go to the [Testcontainers website](https://testcontainers.com) 

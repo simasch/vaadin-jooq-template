@@ -21,8 +21,10 @@ public class HelloWorldView extends HorizontalLayout {
         setMargin(true);
 
         var name = new TextField(getTranslation("Your name"));
+        name.setId("name");
 
         var sayHello = new Button(getTranslation("Say hello"));
+        sayHello.setId("say-hello");
         sayHello.addClickListener(e -> Notifier.info(getTranslation("Hello {0}", name.getValue())));
         sayHello.addClickShortcut(Key.ENTER);
 

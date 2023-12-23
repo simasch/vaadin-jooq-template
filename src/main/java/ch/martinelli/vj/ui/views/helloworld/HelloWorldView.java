@@ -1,9 +1,9 @@
 package ch.martinelli.vj.ui.views.helloworld;
 
+import ch.martinelli.vj.ui.components.Notifier;
 import ch.martinelli.vj.ui.layout.MainLayout;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -21,10 +21,9 @@ public class HelloWorldView extends HorizontalLayout {
         setMargin(true);
 
         var name = new TextField(getTranslation("Your name"));
+
         var sayHello = new Button(getTranslation("Say hello"));
-        sayHello.addClickListener(e -> {
-            Notification.show(getTranslation("Hello {0}", name.getValue()), 3000, Notification.Position.TOP_END);
-        });
+        sayHello.addClickListener(e -> Notifier.info(getTranslation("Hello {0}", name.getValue())));
         sayHello.addClickShortcut(Key.ENTER);
 
         add(name, sayHello);

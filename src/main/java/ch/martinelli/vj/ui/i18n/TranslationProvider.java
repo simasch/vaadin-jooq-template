@@ -11,6 +11,10 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * All the texts are written in English.
+ * This I18NProvider only translates messages when the Locale is not English.
+ */
 @Component
 public class TranslationProvider implements I18NProvider {
 
@@ -29,7 +33,7 @@ public class TranslationProvider implements I18NProvider {
         }
 
         if (locale.getLanguage().equals("en")) {
-            // This is the default language. The key is in English so we don't need to translate it
+            // This is the default language. The key is in English, so we don't need to translate it
             if (params.length > 0) {
                 return new MessageFormat(key, locale).format(params);
             } else {

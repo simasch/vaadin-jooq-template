@@ -12,7 +12,8 @@ It contains all the necessary configuration and some examples to get you started
 To run the application with a database started by Testcontainers simply start from your IDE `TestVjApplication`. 
 
 ***Important:***
-This class uses the [Spring Boot Testcontainers support](https://spring.io/blog/2023/06/23/improved-testcontainers-support-in-spring-boot-3-1/) introduced with Spring Boot 3.1. Therefor you'll [Docker](https://www.docker.com) or [Testcontainers Cloud](https://testcontainers.com/cloud/) must run on your local computer
+This class uses the [Spring Boot Testcontainers support](https://spring.io/blog/2023/06/23/improved-testcontainers-support-in-spring-boot-3-1/) introduced with Spring Boot 3.1. 
+Therefor [Docker](https://www.docker.com) or [Testcontainers Cloud](https://testcontainers.com/cloud/) must run on your local computer
 
 ## Testing the application
 

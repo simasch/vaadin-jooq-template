@@ -1,6 +1,6 @@
 package ch.martinelli.vj.ui.layout;
 
-import ch.martinelli.vj.db.tables.records.LoginUserRecord;
+import ch.martinelli.vj.db.tables.records.UserRecord;
 import ch.martinelli.vj.security.AuthenticatedUser;
 import ch.martinelli.vj.ui.views.helloworld.HelloWorldView;
 import ch.martinelli.vj.ui.views.person.PersonView;
@@ -80,9 +80,9 @@ public class MainLayout extends AppLayout {
     private Footer createFooter() {
         Footer layout = new Footer();
 
-        Optional<LoginUserRecord> optionalLoginUserRecord = authenticatedUser.get();
-        if (optionalLoginUserRecord.isPresent()) {
-            LoginUserRecord user = optionalLoginUserRecord.get();
+        Optional<UserRecord> optionalUserRecord = authenticatedUser.get();
+        if (optionalUserRecord.isPresent()) {
+            UserRecord user = optionalUserRecord.get();
 
             Avatar avatar = new Avatar("%s %s".formatted(user.getFirstName(), user.getLastName()));
             StreamResource resource = new StreamResource("profile-pic",

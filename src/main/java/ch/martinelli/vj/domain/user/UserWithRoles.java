@@ -1,33 +1,30 @@
 package ch.martinelli.vj.domain.user;
 
-import ch.martinelli.vj.db.tables.records.LoginUserRecord;
+import ch.martinelli.vj.db.tables.records.UserRecord;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class UserWithRoles {
-    private LoginUserRecord user;
+    private UserRecord user;
     private Set<String> roles;
 
     public UserWithRoles() {
-        this(new LoginUserRecord(), new HashSet<>());
+        this.user = new UserRecord();
+        this.roles = new HashSet<>();
     }
 
-    public UserWithRoles(LoginUserRecord user, List<String> roles) {
-        this(user, new HashSet<>(roles));
-    }
-
-    public UserWithRoles(LoginUserRecord user, Set<String> roles) {
+    public UserWithRoles(UserRecord user, List<String> roles) {
         this.user = user;
-        this.roles = roles;
+        this.roles = new HashSet<>(roles);
     }
 
-    public LoginUserRecord getUser() {
+    public UserRecord getUser() {
         return user;
     }
 
-    public void setUser(LoginUserRecord user) {
+    public void setUser(UserRecord user) {
         this.user = user;
     }
 

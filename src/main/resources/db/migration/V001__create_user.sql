@@ -1,4 +1,4 @@
-create table login_user
+create table "user"
 (
     username        varchar(100) primary key,
     first_name      varchar(100) not null,

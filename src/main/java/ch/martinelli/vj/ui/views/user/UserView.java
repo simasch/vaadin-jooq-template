@@ -27,7 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 
-import static ch.martinelli.vj.db.tables.LoginUser.LOGIN_USER;
+import static ch.martinelli.vj.db.tables.User.USER;
 
 @RolesAllowed(Role.ADMIN)
 @PageTitle("Users")
@@ -61,15 +61,15 @@ public class UserView extends Div implements HasUrlParameter<String> {
 
         var usernameColumn = grid.addColumn(u -> u.getUser().getUsername())
                 .setHeader("Username")
-                .setSortable(true).setSortProperty(LOGIN_USER.USERNAME.getName())
+                .setSortable(true).setSortProperty(USER.USERNAME.getName())
                 .setAutoWidth(true);
         grid.addColumn(u -> u.getUser().getFirstName())
                 .setHeader("First Name")
-                .setSortable(true).setSortProperty(LOGIN_USER.FIRST_NAME.getName())
+                .setSortable(true).setSortProperty(USER.FIRST_NAME.getName())
                 .setAutoWidth(true);
         grid.addColumn(u -> u.getUser().getLastName())
                 .setHeader("Last Name")
-                .setSortable(true).setSortProperty(LOGIN_USER.LAST_NAME.getName())
+                .setSortable(true).setSortProperty(USER.LAST_NAME.getName())
                 .setAutoWidth(true);
         grid.addColumn(u -> String.join(", ", u.getRoles()))
                 .setHeader("Roles")
@@ -77,7 +77,7 @@ public class UserView extends Div implements HasUrlParameter<String> {
 
         grid.sort(GridSortOrder.asc(usernameColumn).build());
         grid.setItems(query ->
-                userService.findAllUserWithRoles(query.getOffset(), query.getLimit(), VaadinJooqUtil.orderFields(LOGIN_USER, query)).stream()
+                userService.findAllUserWithRoles(query.getOffset(), query.getLimit(), VaadinJooqUtil.orderFields(USER, query)).stream()
         );
 
         // when a row is selected or deselected, populate form

@@ -1,6 +1,6 @@
 package ch.martinelli.vj.domain.user;
 
-import ch.martinelli.vj.db.tables.records.LoginUserRecord;
+import ch.martinelli.vj.db.tables.records.UserRecord;
 import ch.martinelli.vj.db.tables.records.UserRoleRecord;
 import org.jooq.DSLContext;
 import org.jooq.OrderField;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static ch.martinelli.vj.db.tables.LoginUser.LOGIN_USER;
+import static ch.martinelli.vj.db.tables.User.USER;
 import static ch.martinelli.vj.db.tables.UserRole.USER_ROLE;
 import static org.jooq.Records.mapping;
 import static org.jooq.impl.DSL.multiset;
@@ -28,20 +28,20 @@ public class UserService {
         this.ctx = ctx;
     }
 
-    public Optional<? extends LoginUserRecord> findUserByUsername(String username) {
-        return ctx.selectFrom(LOGIN_USER)
-                .where(LOGIN_USER.USERNAME.eq(username))
+    public Optional<? extends UserRecord> findUserByUsername(String username) {
+        return ctx.selectFrom(USER)
+                .where(USER.USERNAME.eq(username))
                 .fetchOptional();
     }
 
     public Optional<UserWithRoles> findUserWithRolesByUsername(String username) {
-        return ctx.select(LOGIN_USER,
+        return ctx.select(USER,
                         multiset(select(USER_ROLE.ROLE)
                                 .from(USER_ROLE)
-                                .where(USER_ROLE.USERNAME.eq(LOGIN_USER.USERNAME))
+                                .where(USER_ROLE.USERNAME.eq(USER.USERNAME))
                         ).convertFrom(r -> r.map(Record1::value1)))
-                .from(LOGIN_USER)
-                .where(LOGIN_USER.USERNAME.eq(username))
+                .from(USER)
+                .where(USER.USERNAME.eq(username))
                 .fetchOptional(mapping(UserWithRoles::new));
     }
 
@@ -52,12 +52,12 @@ public class UserService {
     }
 
     public List<UserWithRoles> findAllUserWithRoles(int offset, int limit, List<OrderField<?>> orderFields) {
-        return ctx.select(LOGIN_USER,
+        return ctx.select(USER,
                         multiset(select(USER_ROLE.ROLE)
                                 .from(USER_ROLE)
-                                .where(USER_ROLE.USERNAME.eq(LOGIN_USER.USERNAME))
+                                .where(USER_ROLE.USERNAME.eq(USER.USERNAME))
                         ).convertFrom(r -> r.map(Record1::value1)))
-                .from(LOGIN_USER)
+                .from(USER)
                 .orderBy(orderFields)
                 .offset(offset)
                 .limit(limit)

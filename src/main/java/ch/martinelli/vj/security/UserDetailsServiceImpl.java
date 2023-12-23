@@ -1,6 +1,6 @@
 package ch.martinelli.vj.security;
 
-import ch.martinelli.vj.db.tables.records.LoginUserRecord;
+import ch.martinelli.vj.db.tables.records.UserRecord;
 import ch.martinelli.vj.domain.user.UserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new User(user.getUsername(), user.getHashedPassword(), getAuthorities(user));
     }
 
-    private List<SimpleGrantedAuthority> getAuthorities(LoginUserRecord user) {
+    private List<SimpleGrantedAuthority> getAuthorities(UserRecord user) {
         return userService.findRolesByUsername(user.getUsername())
                 .stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole())).toList();
     }

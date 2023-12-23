@@ -3,6 +3,7 @@ package ch.martinelli.vj.ui.views.person;
 import ch.martinelli.vj.db.tables.records.PersonRecord;
 import ch.martinelli.vj.domain.person.PersonService;
 import ch.martinelli.vj.domain.user.Role;
+import ch.martinelli.vj.ui.components.Notifier;
 import ch.martinelli.vj.ui.layout.MainLayout;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -14,7 +15,6 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
@@ -24,6 +24,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.*;
 import io.seventytwo.vaadinjooq.util.VaadinJooqUtil;
 import jakarta.annotation.security.RolesAllowed;
+import org.jooq.exception.DataAccessException;
 
 import static ch.martinelli.vj.db.tables.Person.PERSON;
 
@@ -196,13 +197,16 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
                     person = new PersonRecord();
                 }
                 binder.writeBeanIfValid(person);
-                personService.save(person);
+
+                try {
+                    personService.save(person);
+                    Notifier.success("Person saved");
+                } catch (DataAccessException ex) {
+                    Notifier.error("Person could not be saved!");
+                }
 
                 clearForm();
-
                 refreshGrid();
-
-                Notification.show("Person saved");
 
                 UI.getCurrent().navigate(PersonView.class);
             }

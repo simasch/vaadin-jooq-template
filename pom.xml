@@ -148,6 +148,7 @@
                                     <database>
                                         <inputSchema>public</inputSchema>
                                         <excludes>flyway_schema_history</excludes>
+                                        <!-- Used for optimistic locking. See VjJooqConfiguration class -->
                                         <recordVersionFields>version</recordVersionFields>
                                     </database>
                                     <target>

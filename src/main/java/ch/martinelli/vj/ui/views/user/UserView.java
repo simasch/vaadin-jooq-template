@@ -3,6 +3,7 @@ package ch.martinelli.vj.ui.views.user;
 import ch.martinelli.vj.domain.user.Role;
 import ch.martinelli.vj.domain.user.UserService;
 import ch.martinelli.vj.domain.user.UserWithRoles;
+import ch.martinelli.vj.ui.components.Notifier;
 import ch.martinelli.vj.ui.layout.MainLayout;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -13,7 +14,6 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
@@ -23,6 +23,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.*;
 import io.seventytwo.vaadinjooq.util.VaadinJooqUtil;
 import jakarta.annotation.security.RolesAllowed;
+import org.jooq.exception.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
@@ -171,13 +172,16 @@ public class UserView extends Div implements HasUrlParameter<String> {
                     user = new UserWithRoles();
                 }
                 binder.writeBeanIfValid(user);
-                userService.save(user);
+
+                try {
+                    userService.save(user);
+                    Notifier.success("User saved");
+                } catch (DataAccessException ex) {
+                    Notifier.error("User could not be saved!");
+                }
 
                 clearForm();
-
                 refreshGrid();
-
-                Notification.show("Person saved");
 
                 UI.getCurrent().navigate(UserView.class);
             }

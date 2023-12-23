@@ -35,8 +35,8 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
 
     private final Grid<PersonRecord> grid = new Grid<>();
 
-    private final Button cancel = new Button("Cancel");
-    private final Button save = new Button("Save");
+    private final Button cancel = new Button(getTranslation("Cancel"));
+    private final Button save = new Button(getTranslation("Save"));
 
     private final Binder<PersonRecord> binder = new Binder<>();
 
@@ -60,38 +60,38 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
 
         var firstNameColumn = grid.addColumn(PersonRecord::getFirstName)
-                .setHeader("First Name")
+                .setHeader(getTranslation("First Name"))
                 .setSortable(true).setSortProperty(PERSON.FIRST_NAME.getName())
                 .setAutoWidth(true);
         grid.addColumn(PersonRecord::getLastName)
-                .setHeader("Last Name")
+                .setHeader(getTranslation("Last Name"))
                 .setSortable(true).setSortProperty(PERSON.LAST_NAME.getName())
                 .setAutoWidth(true);
         grid.addColumn(PersonRecord::getEmail)
-                .setHeader("E-Mail")
+                .setHeader(getTranslation("E-Mail"))
                 .setSortable(true).setSortProperty(PERSON.EMAIL.getName())
                 .setAutoWidth(true);
         grid.addColumn(PersonRecord::getPhone)
-                .setHeader("Phone")
+                .setHeader(getTranslation("Phone"))
                 .setSortable(true).setSortProperty(PERSON.PHONE.getName())
                 .setAutoWidth(true);
         grid.addColumn(PersonRecord::getDateOfBirth)
-                .setHeader("Date of Birth")
+                .setHeader(getTranslation("Date of Birth"))
                 .setSortable(true).setSortProperty(PERSON.DATE_OF_BIRTH.getName())
                 .setAutoWidth(true);
         grid.addColumn(PersonRecord::getOccupation)
-                .setHeader("Occupation")
+                .setHeader(getTranslation("Occupation"))
                 .setSortable(true).setSortProperty(PERSON.OCCUPATION.getName())
                 .setAutoWidth(true);
         grid.addColumn(PersonRecord::getRole)
-                .setHeader("Role")
+                .setHeader(getTranslation("Role"))
                 .setSortable(true).setSortProperty(PERSON.ROLE.getName())
                 .setAutoWidth(true);
         grid.addComponentColumn(person -> {
             var importantCheckbox = new Checkbox();
             importantCheckbox.setValue(person.getImportant());
             return importantCheckbox;
-        }).setHeader("Important").setAutoWidth(true);
+        }).setHeader(getTranslation("Important")).setAutoWidth(true);
 
         grid.sort(GridSortOrder.asc(firstNameColumn).build());
         grid.setItems(query ->
@@ -138,42 +138,42 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
     private FormLayout createForm() {
         var formLayout = new FormLayout();
 
-        var firstNameField = new TextField("First Name");
+        var firstNameField = new TextField(getTranslation("First Name"));
         binder.forField(firstNameField)
                 .asRequired()
                 .bind(PersonRecord::getFirstName, PersonRecord::setFirstName);
 
-        var lastNameField = new TextField("Last Name");
+        var lastNameField = new TextField(getTranslation("Last Name"));
         binder.forField(lastNameField)
                 .asRequired()
                 .bind(PersonRecord::getLastName, PersonRecord::setLastName);
 
-        var emailField = new EmailField("Email");
+        var emailField = new EmailField(getTranslation("Email"));
         binder.forField(emailField)
                 .asRequired()
                 .bind(PersonRecord::getEmail, PersonRecord::setEmail);
 
-        var phoneField = new TextField("Phone");
+        var phoneField = new TextField(getTranslation("Phone"));
         binder.forField(phoneField)
                 .asRequired()
                 .bind(PersonRecord::getPhone, PersonRecord::setPhone);
 
-        var dateOfBirthField = new DatePicker("Date Of Birth");
+        var dateOfBirthField = new DatePicker(getTranslation("Date Of Birth"));
         binder.forField(dateOfBirthField)
                 .asRequired()
                 .bind(PersonRecord::getDateOfBirth, PersonRecord::setDateOfBirth);
 
-        var occupationField = new TextField("Occupation");
+        var occupationField = new TextField(getTranslation("Occupation"));
         binder.forField(occupationField)
                 .asRequired()
                 .bind(PersonRecord::getOccupation, PersonRecord::setOccupation);
 
-        var roleField = new TextField("Role");
+        var roleField = new TextField(getTranslation("Role"));
         binder.forField(roleField)
                 .asRequired()
                 .bind(PersonRecord::getRole, PersonRecord::setRole);
 
-        var importantCheckbox = new Checkbox("Important");
+        var importantCheckbox = new Checkbox(getTranslation("Important"));
         binder.forField(importantCheckbox)
                 .bind(PersonRecord::getImportant, PersonRecord::setImportant);
 
@@ -184,7 +184,6 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
 
     private HorizontalLayout createButtonLayout() {
         var buttonLayout = new HorizontalLayout();
-        buttonLayout.setClassName("button-layout");
 
         cancel.addClickListener(e -> {
             clearForm();
@@ -200,9 +199,9 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
 
                 try {
                     personService.save(person);
-                    Notifier.success("Person saved");
+                    Notifier.success(getTranslation("Person saved"));
                 } catch (DataAccessException ex) {
-                    Notifier.error("Person could not be saved!");
+                    Notifier.error(getTranslation("Person could not be saved!"));
                 }
 
                 clearForm();

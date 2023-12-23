@@ -10,7 +10,6 @@ import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.html.*;
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.orderedlayout.Scroller;
@@ -19,6 +18,7 @@ import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
+import com.vaadin.flow.theme.lumo.LumoIcon;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import java.io.ByteArrayInputStream;
@@ -64,14 +64,14 @@ public class MainLayout extends AppLayout {
         SideNav nav = new SideNav();
 
         if (accessChecker.hasAccess(HelloWorldView.class)) {
-            nav.addItem(new SideNavItem("Hello World", HelloWorldView.class, VaadinIcon.GLOBE.create()));
+            nav.addItem(new SideNavItem(getTranslation("Hello World"), HelloWorldView.class, VaadinIcon.GLOBE.create()));
 
         }
         if (accessChecker.hasAccess(PersonView.class)) {
-            nav.addItem(new SideNavItem("Persons", PersonView.class, VaadinIcon.ARCHIVES.create()));
+            nav.addItem(new SideNavItem(getTranslation("Persons"), PersonView.class, VaadinIcon.ARCHIVES.create()));
         }
         if (accessChecker.hasAccess(UserView.class)) {
-            nav.addItem(new SideNavItem("Users", UserView.class, VaadinIcon.USER.create()));
+            nav.addItem(new SideNavItem(getTranslation("Users"), UserView.class, VaadinIcon.USER.create()));
         }
 
         return nav;
@@ -98,18 +98,16 @@ public class MainLayout extends AppLayout {
             Div div = new Div();
             div.add(avatar);
             div.add("%s %s".formatted(user.getFirstName(), user.getLastName()));
-            div.add(new Icon("lumo", "dropdown"));
-            div.getElement().getStyle().set("display", "flex");
-            div.getElement().getStyle().set("align-items", "center");
-            div.getElement().getStyle().set("gap", "var(--lumo-space-s)");
+            div.add(LumoIcon.DROPDOWN.create());
+            div.addClassNames(LumoUtility.Display.FLEX, LumoUtility.AlignItems.CENTER, LumoUtility.Gap.SMALL);
             userName.add(div);
-            userName.getSubMenu().addItem("Sign out", e -> {
+            userName.getSubMenu().addItem(getTranslation("Sign out"), e -> {
                 authenticatedUser.logout();
             });
 
             layout.add(userMenu);
         } else {
-            Anchor loginLink = new Anchor("login", "Sign in");
+            Anchor loginLink = new Anchor("login", getTranslation("Sign in"));
             layout.add(loginLink);
         }
 

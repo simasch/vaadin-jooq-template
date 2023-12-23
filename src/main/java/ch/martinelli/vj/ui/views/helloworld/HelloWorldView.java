@@ -20,14 +20,15 @@ public class HelloWorldView extends HorizontalLayout {
     public HelloWorldView() {
         setMargin(true);
 
-        var name = new TextField("Your name");
-        var sayHello = new Button("Say hello");
+        var name = new TextField(getTranslation("Your name"));
+        var sayHello = new Button(getTranslation("Say hello"));
         sayHello.addClickListener(e -> {
-            Notification.show("Hello %s".formatted(name.getValue()), 3000, Notification.Position.TOP_END);
+            Notification.show(getTranslation("Hello {0}", name.getValue()), 3000, Notification.Position.TOP_END);
         });
         sayHello.addClickShortcut(Key.ENTER);
 
         add(name, sayHello);
+
         setVerticalComponentAlignment(Alignment.END, name, sayHello);
     }
 

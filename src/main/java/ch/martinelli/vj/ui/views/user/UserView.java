@@ -38,8 +38,8 @@ public class UserView extends Div implements HasUrlParameter<String> {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final Grid<UserWithRoles> grid = new Grid<>();
-    private final Button cancel = new Button("Cancel");
-    private final Button save = new Button("Save");
+    private final Button cancel = new Button(getTranslation("Cancel"));
+    private final Button save = new Button(getTranslation("Save"));
     private final Binder<UserWithRoles> binder = new Binder<>();
     private UserWithRoles user;
     private TextField usernameField;
@@ -61,19 +61,19 @@ public class UserView extends Div implements HasUrlParameter<String> {
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
 
         var usernameColumn = grid.addColumn(u -> u.getUser().getUsername())
-                .setHeader("Username")
+                .setHeader(getTranslation("Username"))
                 .setSortable(true).setSortProperty(USER.USERNAME.getName())
                 .setAutoWidth(true);
         grid.addColumn(u -> u.getUser().getFirstName())
-                .setHeader("First Name")
+                .setHeader(getTranslation("First Name"))
                 .setSortable(true).setSortProperty(USER.FIRST_NAME.getName())
                 .setAutoWidth(true);
         grid.addColumn(u -> u.getUser().getLastName())
-                .setHeader("Last Name")
+                .setHeader(getTranslation("Last Name"))
                 .setSortable(true).setSortProperty(USER.LAST_NAME.getName())
                 .setAutoWidth(true);
         grid.addColumn(u -> String.join(", ", u.getRoles()))
-                .setHeader("Roles")
+                .setHeader(getTranslation("Roles"))
                 .setAutoWidth(true);
 
         grid.sort(GridSortOrder.asc(usernameColumn).build());
@@ -126,27 +126,27 @@ public class UserView extends Div implements HasUrlParameter<String> {
     private FormLayout createForm() {
         var formLayout = new FormLayout();
 
-        usernameField = new TextField("Username");
+        usernameField = new TextField(getTranslation("Username"));
         binder.forField(usernameField)
                 .asRequired()
                 .bind(u -> u.getUser().getUsername(), (u, s) -> u.getUser().setUsername(s));
 
-        var firstNameField = new TextField("First Name");
+        var firstNameField = new TextField(getTranslation("First Name"));
         binder.forField(firstNameField)
                 .asRequired()
                 .bind(u -> u.getUser().getFirstName(), (u, s) -> u.getUser().setFirstName(s));
 
-        var lastNameField = new TextField("Last Name");
+        var lastNameField = new TextField(getTranslation("Last Name"));
         binder.forField(lastNameField)
                 .asRequired()
                 .bind(u -> u.getUser().getLastName(), (u, s) -> u.getUser().setLastName(s));
 
-        var passwordField = new PasswordField("Password");
+        var passwordField = new PasswordField(getTranslation("Password"));
         binder.forField(passwordField)
                 .asRequired()
                 .bind(u -> "", (u, s) -> u.getUser().setHashedPassword(passwordEncoder.encode(s)));
 
-        var roleMultiSelect = new MultiSelectComboBox<String>("Roles");
+        var roleMultiSelect = new MultiSelectComboBox<String>(getTranslation("Roles"));
         binder.forField(roleMultiSelect)
                         .bind(UserWithRoles::getRoles, UserWithRoles::setRoles);
 
@@ -159,7 +159,6 @@ public class UserView extends Div implements HasUrlParameter<String> {
 
     private HorizontalLayout createButtonLayout() {
         var buttonLayout = new HorizontalLayout();
-        buttonLayout.setClassName("button-layout");
 
         cancel.addClickListener(e -> {
             clearForm();
@@ -175,9 +174,9 @@ public class UserView extends Div implements HasUrlParameter<String> {
 
                 try {
                     userService.save(user);
-                    Notifier.success("User saved");
+                    Notifier.success(getTranslation("User saved"));
                 } catch (DataAccessException ex) {
-                    Notifier.error("User could not be saved!");
+                    Notifier.error(getTranslation("User could not be saved!"));
                 }
 
                 clearForm();

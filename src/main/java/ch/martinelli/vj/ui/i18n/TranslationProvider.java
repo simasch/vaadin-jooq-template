@@ -41,7 +41,7 @@ public class TranslationProvider implements I18NProvider {
             }
         }
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages", locale);
+        var bundle = ResourceBundle.getBundle("i18n.messages", locale);
         if (bundle == null) {
             return key;
         }
@@ -53,7 +53,7 @@ public class TranslationProvider implements I18NProvider {
             } else {
                 return value;
             }
-        } catch (final MissingResourceException e) {
+        } catch (MissingResourceException e) {
             LOGGER.warn("Missing translation for key " + key);
             return "!" + locale.getLanguage() + ": " + key;
         }

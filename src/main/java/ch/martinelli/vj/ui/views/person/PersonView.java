@@ -121,7 +121,7 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
 
     private void clearForm() {
         person = null;
-        binder.readBean(person);
+        binder.readBean(null);
     }
 
     @Override

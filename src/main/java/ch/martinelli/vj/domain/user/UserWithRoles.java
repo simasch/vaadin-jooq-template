@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public class UserWithRoles {
-    private UserRecord user;
+    private final UserRecord user;
     private Set<String> roles;
 
     public UserWithRoles() {
@@ -22,10 +22,6 @@ public class UserWithRoles {
 
     public UserRecord getUser() {
         return user;
-    }
-
-    public void setUser(UserRecord user) {
-        this.user = user;
     }
 
     public Set<String> getRoles() {

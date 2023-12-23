@@ -12,16 +12,16 @@ public class Notifier extends Notification {
     public static final int DURATION = 3000;
 
     public static void info(String message) {
-        show(message, DURATION, Position.TOP_END);
+        showNotification(message);
     }
 
     public static void success(String message) {
-        Notification notification = show(message, DURATION, Position.TOP_END);
+        var notification = showNotification(message);
         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
     }
 
     public static void warn(String message) {
-        Notification notification = show(message, DURATION, Position.TOP_END);
+        var notification = showNotification(message);
         notification.addThemeVariants(NotificationVariant.LUMO_WARNING);
     }
 
@@ -39,6 +39,10 @@ public class Notifier extends Notification {
         close.addClickListener(buttonClickEvent -> notification.close());
         notification.open();
         close.focus();
+    }
+
+    private static Notification showNotification(String message) {
+        return show(message, DURATION, Position.TOP_END);
     }
 
 }

@@ -105,7 +105,7 @@ public class UserView extends Div implements HasUrlParameter<String> {
 
     private void clearForm() {
         user = null;
-        binder.readBean(user);
+        binder.readBean(null);
     }
 
     @Override

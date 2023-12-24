@@ -82,4 +82,14 @@ public class UserService {
             userRole.store();
         }
     }
+
+    @Transactional
+    public void deleteByUsername(String username) {
+        ctx.deleteFrom(USER_ROLE)
+                .where(USER_ROLE.USERNAME.eq(username))
+                .execute();
+        ctx.deleteFrom(USER)
+                .where(USER.USERNAME.eq(username))
+                .execute();
+    }
 }

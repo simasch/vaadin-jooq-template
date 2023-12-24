@@ -9,11 +9,14 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
@@ -76,6 +79,28 @@ public class UserView extends Div implements HasUrlParameter<String> {
                 .setHeader(getTranslation("Roles"))
                 .setAutoWidth(true);
 
+        var addIcon = VaadinIcon.PLUS.create();
+        addIcon.addClickListener(e -> clearForm());
+        grid.addComponentColumn(u -> {
+                    var deleteIcon = VaadinIcon.TRASH.create();
+                    deleteIcon.addClickListener(e ->
+                            new ConfirmDialog(
+                                    getTranslation("Delete User?"),
+                                    getTranslation("Do you really want to delete the user {0}?", u.getUser().getUsername()),
+                                    getTranslation("Delete"),
+                                    confirmEvent -> {
+                                        userService.deleteByUsername(u.getUser().getUsername());
+                                        clearForm();
+                                        refreshGrid();
+                                    },
+                                    getTranslation("Cancel"),
+                                    cancelEvent -> {})
+                            .open());
+                    return deleteIcon;
+                })
+                .setTextAlign(ColumnTextAlign.END)
+                .setHeader(addIcon);
+
         grid.sort(GridSortOrder.asc(usernameColumn).build());
         grid.setItems(query ->
                 userService.findAllUserWithRoles(query.getOffset(), query.getLimit(), VaadinJooqUtil.orderFields(USER, query)).stream()
@@ -104,6 +129,7 @@ public class UserView extends Div implements HasUrlParameter<String> {
     }
 
     private void clearForm() {
+        usernameField.setReadOnly(false);
         user = null;
         binder.readBean(null);
     }
@@ -148,7 +174,7 @@ public class UserView extends Div implements HasUrlParameter<String> {
 
         var roleMultiSelect = new MultiSelectComboBox<String>(getTranslation("Roles"));
         binder.forField(roleMultiSelect)
-                        .bind(UserWithRoles::getRoles, UserWithRoles::setRoles);
+                .bind(UserWithRoles::getRoles, UserWithRoles::setRoles);
 
         roleMultiSelect.setItems(Set.of(Role.ADMIN, Role.USER));
 

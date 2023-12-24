@@ -34,9 +34,16 @@ public class PersonService {
         person.store();
     }
 
-    public Optional<PersonRecord> findById(Long id) {
+    public Optional<PersonRecord> findById(long id) {
         return ctx.selectFrom(PERSON)
                 .where(PERSON.ID.eq(id))
                 .fetchOptional();
+    }
+
+    @Transactional
+    public void deleteById(long id) {
+        ctx.deleteFrom(PERSON)
+                .where(PERSON.ID.eq(id))
+                .execute();
     }
 }

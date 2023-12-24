@@ -9,12 +9,15 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
@@ -71,27 +74,35 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
                 .setHeader(getTranslation("E-Mail"))
                 .setSortable(true).setSortProperty(PERSON.EMAIL.getName())
                 .setAutoWidth(true);
-        grid.addColumn(PersonRecord::getPhone)
-                .setHeader(getTranslation("Phone"))
-                .setSortable(true).setSortProperty(PERSON.PHONE.getName())
-                .setAutoWidth(true);
-        grid.addColumn(PersonRecord::getDateOfBirth)
-                .setHeader(getTranslation("Date of Birth"))
-                .setSortable(true).setSortProperty(PERSON.DATE_OF_BIRTH.getName())
-                .setAutoWidth(true);
-        grid.addColumn(PersonRecord::getOccupation)
-                .setHeader(getTranslation("Occupation"))
-                .setSortable(true).setSortProperty(PERSON.OCCUPATION.getName())
-                .setAutoWidth(true);
-        grid.addColumn(PersonRecord::getRole)
-                .setHeader(getTranslation("Role"))
-                .setSortable(true).setSortProperty(PERSON.ROLE.getName())
-                .setAutoWidth(true);
         grid.addComponentColumn(person -> {
-            var importantCheckbox = new Checkbox();
-            importantCheckbox.setValue(person.getImportant());
-            return importantCheckbox;
-        }).setHeader(getTranslation("Important")).setAutoWidth(true);
+                    var importantCheckbox = new Checkbox();
+                    importantCheckbox.setValue(person.getImportant());
+                    return importantCheckbox;
+                })
+                .setHeader(getTranslation("Important"))
+                .setAutoWidth(true);
+
+        var addIcon = VaadinIcon.PLUS.create();
+        addIcon.addClickListener(e -> clearForm());
+        grid.addComponentColumn(p -> {
+                    var deleteIcon = VaadinIcon.TRASH.create();
+                    deleteIcon.addClickListener(e ->
+                            new ConfirmDialog(
+                                    getTranslation("Delete Person?"),
+                                    getTranslation("Do you really want to delete the person {0} {1}?", p.getFirstName(), p.getLastName()),
+                                    getTranslation("Delete"),
+                                    confirmEvent -> {
+                                        personService.deleteById(p.getId());
+                                        clearForm();
+                                        refreshGrid();
+                                    },
+                                    getTranslation("Cancel"),
+                                    cancelEvent -> {})
+                                    .open());
+                    return deleteIcon;
+                })
+                .setTextAlign(ColumnTextAlign.END)
+                .setHeader(addIcon);
 
         grid.sort(GridSortOrder.asc(firstNameColumn).build());
         grid.setItems(query ->

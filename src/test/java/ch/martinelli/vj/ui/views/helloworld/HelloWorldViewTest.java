@@ -1,6 +1,6 @@
 package ch.martinelli.vj.ui.views.helloworld;
 
-import ch.martinelli.vj.ui.AbstractKaribuTest;
+import ch.martinelli.vj.ui.KaribuTest;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
@@ -13,7 +13,7 @@ import static com.github.mvysny.kaributesting.v10.LocatorJ.*;
 import static com.github.mvysny.kaributesting.v10.NotificationsKt.expectNotifications;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HelloWorldViewTest extends AbstractKaribuTest {
+class HelloWorldViewTest extends KaribuTest {
 
     @BeforeEach
     void navigate() {

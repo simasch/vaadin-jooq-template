@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 @Import(TestVjApplication.class)
 @SpringBootTest
-public abstract class AbstractKaribuTest {
+public abstract class KaribuTest {
 
     private static Routes routes;
 
@@ -34,7 +34,7 @@ public abstract class AbstractKaribuTest {
 
     @BeforeAll
     public static void discoverRoutes() {
-        routes = new Routes().autoDiscoverViews(AbstractKaribuTest.class.getPackageName());
+        routes = new Routes().autoDiscoverViews(KaribuTest.class.getPackageName());
     }
 
     @BeforeEach

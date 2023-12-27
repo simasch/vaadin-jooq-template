@@ -21,6 +21,7 @@
         <testcontainers-jooq-codegen-maven-plugin.version>0.0.3</testcontainers-jooq-codegen-maven-plugin.version>
         <karibu-testing.version>2.0.2</karibu-testing.version>
         <playwright.version>1.25.0</playwright.version>
+        <mopo.version>0.0.1</mopo.version>
         <archunit.version>1.0.1</archunit.version>
     </properties>
 
@@ -89,19 +90,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.mvysny.kaributesting</groupId>
-            <artifactId>karibu-testing-v10-spring</artifactId>
-            <version>${karibu-testing.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.microsoft.playwright</groupId>
-            <artifactId>playwright</artifactId>
-            <version>${playwright.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
@@ -115,6 +103,24 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.mvysny.kaributesting</groupId>
+            <artifactId>karibu-testing-v10-spring</artifactId>
+            <version>${karibu-testing.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+            <version>${playwright.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>in.virit</groupId>
+            <artifactId>mopo</artifactId>
+            <version>${mopo.version}</version>
         </dependency>
 
         <dependency>

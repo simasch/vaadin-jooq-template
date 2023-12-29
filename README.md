@@ -23,7 +23,7 @@ Thus, [Docker](https://www.docker.com) or [Testcontainers Cloud](https://testcon
 
 There are two base classes:
 
-- `KaribuTest` can be used for UI unit tests as it setups a Vaadin mock environment. 
+- `KaribuTest` can be used for fast [browser-less testing](https://mvysny.github.io/browserless-web-testing/) aka UI unit test. Karibu setups a Vaadin mock environment. 
 - `PlaywrightIT` configures Playwright for E2E tests. This class uses SpringBootTest at a random port.
 
 The Playwright test uses [Mopo](https://github.com/viritin/mopo).

@@ -1,6 +1,6 @@
 package ch.martinelli.vj.ui;
 
-import ch.martinelli.vj.TestVjApplication;
+import ch.martinelli.vj.TestVjConfiguration;
 import com.microsoft.playwright.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -11,7 +11,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 
 
-@Import(TestVjApplication.class)
+@Import(TestVjConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class PlaywrightIT {
 

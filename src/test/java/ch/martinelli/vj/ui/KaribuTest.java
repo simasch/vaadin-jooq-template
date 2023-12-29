@@ -1,6 +1,6 @@
 package ch.martinelli.vj.ui;
 
-import ch.martinelli.vj.TestVjApplication;
+import ch.martinelli.vj.TestVjConfiguration;
 import com.github.mvysny.kaributesting.mockhttp.MockRequest;
 import com.github.mvysny.kaributesting.v10.MockVaadin;
 import com.github.mvysny.kaributesting.v10.Routes;
@@ -23,7 +23,7 @@ import org.springframework.security.core.userdetails.User;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Import(TestVjApplication.class)
+@Import(TestVjConfiguration.class)
 @SpringBootTest
 public abstract class KaribuTest {
 

@@ -15,12 +15,11 @@ import org.springframework.context.annotation.Import;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class PlaywrightIT {
 
-    private static Playwright playwright;
-    private static Browser browser;
-
     @LocalServerPort
     protected Integer localServerPort;
 
+    private static Playwright playwright;
+    private static Browser browser;
     protected Page page;
     private BrowserContext browserContext;
 
@@ -29,7 +28,8 @@ public abstract class PlaywrightIT {
         playwright = Playwright.create();
         BrowserType browserType = playwright.chromium();
         BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions();
-        launchOptions.headless = false;
+        // set to false if you want to see the browser during development
+        launchOptions.headless = true;
         browser = browserType.launch(launchOptions);
     }
 

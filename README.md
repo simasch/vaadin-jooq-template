@@ -1,13 +1,17 @@
 # Vaadin/jOOQ Template
 
-Template Project that shows how to integrate Vaadin and jOOQ.
+## Introduction
 
-It uses Testcontainers, for generating the jOOQ classes and integration testing and Flyway for the database migrations.  
+This is a template project that shows how to integrate [Vaadin](https://vaadin.com) and [jOOQ](https://jooq.org) 
+and how to test it with [Karibu Testing](https://github.com/mvysny/karibu-testing) and [Playwright](https://playwright.dev).
+
+It uses [Testcontainers](https://testcontainers.com), for generating the jOOQ classes and integration testing and 
+Flyway for the database migrations.  
 
 This project can be used as a starting point to create your own Vaadin application with jOOQ.
 It contains all the necessary configuration and some examples to get you started.
 
-## Running the application
+## Running the Application
 
 To run the application with a database started by Testcontainers simply start from your IDE `TestVjApplication`. 
 
@@ -15,9 +19,15 @@ To run the application with a database started by Testcontainers simply start fr
 This class uses the [Spring Boot Testcontainers support](https://spring.io/blog/2023/06/23/improved-testcontainers-support-in-spring-boot-3-1/) introduced with Spring Boot 3.1. 
 Thus, [Docker](https://www.docker.com) or [Testcontainers Cloud](https://testcontainers.com/cloud/) must run on your local computer
 
-## Testing the application
+## Testing the Application
 
-[Karibu Testing](https://github.com/mvysny/karibu-testing) and [Playwright](https://playwright.dev) will be used in the future.
+There are two base classes:
+
+- `KaribuTest` can be used for UI unit tests as it setups a Vaadin mock environment. 
+- `PlaywrightIT` configures Playwright for E2E tests. This class uses SpringBootTest at a random port.
+
+The Playwright test uses [Mopo](https://github.com/viritin/mopo).
+Mopo simplifies the testing of Vaadin applications with Playwright  
 
 ## Deploying to Production
 
@@ -32,7 +42,7 @@ Once the JAR file is built, you can run it using
 
 ## Project structure
 
-- `layout/MainLayout.java` in `src/main/java` contains the navigation setup (i.e., the side/top bar and the main menu). This setup uses [App Layout](https://vaadin.com/docs/components/app-layout).
+- `layout/MainLayout.java` in `src/main/java` contains the navigation setup using [App Layout](https://vaadin.com/docs/components/app-layout).
 - `views` package in `src/main/java` contains the server-side Java views of your application.
 - `themes` folder in `frontend/` contains the custom CSS styles.
 
@@ -53,8 +63,16 @@ Once the JAR file is built, you can run it using
 
 ### Spring Boot
 
-- Explore the [Spring Boot project page](https://spring.io/projects/spring-boot/) 
+- Explore the [Spring Boot project page](https://spring.io/projects/spring-boot/). 
 
 ### Testcontainers
 
- - Go to the [Testcontainers website](https://testcontainers.com) 
+ - Go to the [Testcontainers website](https://testcontainers.com). 
+
+### Karibu Testing
+
+- Checkout the [GitHub project](https://github.com/mvysny/karibu-testing).
+
+### Playwright
+
+- Read the [documentation](https://playwright.dev).

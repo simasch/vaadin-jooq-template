@@ -50,6 +50,11 @@ Once the JAR file is built, you can run it using
 - `views` package in `src/main/java` contains the server-side Java views of your application.
 - `themes` folder in `frontend/` contains the custom CSS styles.
 
+## Security Configuration
+
+The example uses JWT authentication for better developer experience for example you don't have to re-login during development.
+Read more in the blog of [Matti Tahvonen](https://vaadin.com/blog/jwt-authentication-with-vaadin-flow-for-better-developer-and-user-experience)
+
 ## Useful links
 
 ### Vaadin

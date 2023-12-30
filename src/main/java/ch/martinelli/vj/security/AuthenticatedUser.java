@@ -3,7 +3,7 @@ package ch.martinelli.vj.security;
 import ch.martinelli.vj.db.tables.records.UserRecord;
 import ch.martinelli.vj.domain.user.UserService;
 import com.vaadin.flow.spring.security.AuthenticationContext;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -20,8 +20,8 @@ public class AuthenticatedUser {
     }
 
     public Optional<UserRecord> get() {
-        return authenticationContext.getAuthenticatedUser(UserDetails.class)
-                .flatMap(userDetails -> userService.findUserByUsername(userDetails.getUsername()));
+        return authenticationContext.getAuthenticatedUser(Jwt.class)
+                .flatMap(jwt -> userService.findUserByUsername(jwt.getSubject()));
     }
 
     public void logout() {

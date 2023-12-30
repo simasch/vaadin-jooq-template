@@ -1,4 +1,4 @@
-CREATE SEQUENCE person_seq;
+create sequence person_seq start with 1000;
 
 create table person
 (

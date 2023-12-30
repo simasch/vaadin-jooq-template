@@ -23,7 +23,7 @@ import java.io.ByteArrayInputStream;
 
 public class MainLayout extends AppLayout {
 
-    private final AuthenticatedUser authenticatedUser;
+    private final transient AuthenticatedUser authenticatedUser;
     private final AccessAnnotationChecker accessChecker;
 
     private H2 viewTitle;

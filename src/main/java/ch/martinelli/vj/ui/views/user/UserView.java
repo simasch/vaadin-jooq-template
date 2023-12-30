@@ -38,13 +38,13 @@ import static ch.martinelli.vj.db.tables.User.USER;
 @Route(value = "users", layout = MainLayout.class)
 public class UserView extends Div implements HasUrlParameter<String> {
 
-    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
+    private final transient UserService userService;
+    private final transient PasswordEncoder passwordEncoder;
     private final Grid<UserWithRoles> grid = new Grid<>();
     private final Button cancel = new Button(getTranslation("Cancel"));
     private final Button save = new Button(getTranslation("Save"));
     private final Binder<UserWithRoles> binder = new Binder<>();
-    private UserWithRoles user;
+    private transient UserWithRoles user;
     private TextField usernameField;
 
     public UserView(UserService userService, PasswordEncoder passwordEncoder) {

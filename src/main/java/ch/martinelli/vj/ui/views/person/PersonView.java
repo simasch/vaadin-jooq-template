@@ -36,6 +36,8 @@ import static ch.martinelli.vj.db.tables.Person.PERSON;
 @Route(value = "persons", layout = MainLayout.class)
 public class PersonView extends Div implements HasUrlParameter<Long> {
 
+    private final transient PersonService personService;
+
     private final Grid<PersonRecord> grid = new Grid<>();
 
     private final Button cancel = new Button(getTranslation("Cancel"));
@@ -44,8 +46,6 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
     private final Binder<PersonRecord> binder = new Binder<>();
 
     private PersonRecord person;
-
-    private final PersonService personService;
 
     public PersonView(PersonService personService) {
         this.personService = personService;
@@ -74,9 +74,9 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
                 .setHeader(getTranslation("E-Mail"))
                 .setSortable(true).setSortProperty(PERSON.EMAIL.getName())
                 .setAutoWidth(true);
-        grid.addComponentColumn(person -> {
+        grid.addComponentColumn(p -> {
                     var importantCheckbox = new Checkbox();
-                    importantCheckbox.setValue(person.getImportant());
+                    importantCheckbox.setValue(p.getImportant());
                     return importantCheckbox;
                 })
                 .setHeader(getTranslation("Important"))
@@ -97,7 +97,8 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
                                         refreshGrid();
                                     },
                                     getTranslation("Cancel"),
-                                    cancelEvent -> {})
+                                    cancelEvent -> {
+                                    })
                                     .open());
                     return deleteIcon;
                 })

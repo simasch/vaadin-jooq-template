@@ -54,7 +54,7 @@ public class TranslationProvider implements I18NProvider {
                 return value;
             }
         } catch (MissingResourceException e) {
-            LOGGER.warn("Missing translation for key " + key);
+            LOGGER.warn("Missing translation for key {}", key);
             return "!" + locale.getLanguage() + ": " + key;
         }
     }

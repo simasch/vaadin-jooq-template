@@ -28,7 +28,7 @@ public class UserService {
         this.ctx = ctx;
     }
 
-    public Optional<? extends UserRecord> findUserByUsername(String username) {
+    public Optional<UserRecord> findUserByUsername(String username) {
         return ctx.selectFrom(USER)
                 .where(USER.USERNAME.eq(username))
                 .fetchOptional();

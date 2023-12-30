@@ -13,7 +13,11 @@ It contains all the necessary configuration and some examples to get you started
 
 ## Running the Application
 
-To run the application with a database started by Testcontainers simply start from your IDE `TestVjApplication`. 
+Before running the application the jOOQ metamodel has to be generated using the Maven plung:
+
+    ./mvnw compile
+
+Then you can simply run the application with a database started by Testcontainers from your IDE `TestVjApplication`. 
 
 ***Important:***
 This class uses the [Spring Boot Testcontainers support](https://spring.io/blog/2023/06/23/improved-testcontainers-support-in-spring-boot-3-1/) introduced with Spring Boot 3.1. 

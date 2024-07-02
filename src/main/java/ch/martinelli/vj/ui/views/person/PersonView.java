@@ -76,6 +76,7 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
                 .setAutoWidth(true);
         grid.addComponentColumn(p -> {
                     var importantCheckbox = new Checkbox();
+                    importantCheckbox.setReadOnly(true);
                     importantCheckbox.setValue(p.getImportant());
                     return importantCheckbox;
                 })

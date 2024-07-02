@@ -5,33 +5,33 @@
 This is a template project that shows how to integrate [Vaadin](https://vaadin.com) and [jOOQ](https://jooq.org) 
 and how to test it with [Karibu Testing](https://github.com/mvysny/karibu-testing) and [Playwright](https://playwright.dev).
 
-It uses [Testcontainers](https://testcontainers.com), for generating the jOOQ classes and integration testing and 
-Flyway for the database migrations.  
+It uses [Testcontainers](https://testcontainers.com) for generating the jOOQ classes and integration testing and 
+Flyway for the database migrations.
 
 This project can be used as a starting point to create your own Vaadin application with jOOQ.
 It contains all the necessary configuration and some examples to get you started.
 
 ## Running the Application
 
-Before running the application the jOOQ metamodel has to be generated using the Maven plung:
+Before running the application, the jOOQ metamodel has to be generated using the Maven plugin:
 
     ./mvnw compile
 
-Then you can simply run the application with a database started by Testcontainers from your IDE `TestVjApplication`. 
+Then you can simply run the application with a database started by Testcontainers from your IDE using the `TestVjApplication`.
 
-***Important:***
-This class uses the [Spring Boot Testcontainers support](https://spring.io/blog/2023/06/23/improved-testcontainers-support-in-spring-boot-3-1/) introduced with Spring Boot 3.1. 
-Thus, [Docker](https://www.docker.com) or [Testcontainers Cloud](https://testcontainers.com/cloud/) must run on your local computer
+**Important:**
+This class uses the [Spring Boot Testcontainers support](https://spring.io/blog/2023/06/23/improved-testcontainers-support-in-spring-boot-3-1/), introduced with Spring Boot 3.1.
+Thus, [Docker](https://www.docker.com) or [Testcontainers Cloud](https://testcontainers.com/cloud/) must be running on your local computer.
 
 ## Testing the Application
 
 There are two base classes:
 
-- `KaribuTest` can be used for fast [browser-less testing](https://mvysny.github.io/browserless-web-testing/) aka UI unit test. Karibu setups a Vaadin mock environment. 
+- `KaribuTest` can be used for fast [browser-less testing](https://mvysny.github.io/browserless-web-testing/), aka UI unit test. Karibu sets up a Vaadin mock environment.
 - `PlaywrightIT` configures Playwright for E2E tests. This class uses SpringBootTest at a random port.
 
-The Playwright test uses [Mopo](https://github.com/viritin/mopo).
-Mopo simplifies the testing of Vaadin applications with Playwright  
+The Playwright test uses [Mopo](https://github.com/viritin/mopo),
+which simplifies the testing of Vaadin applications with Playwright.
 
 ## Deploying to Production
 
@@ -39,7 +39,7 @@ To create a production build, call `mvnw clean package -Pproduction` (Windows),
 or `./mvnw clean package -Pproduction` (Mac & Linux).
 
 This will build a JAR file with all the dependencies and front-end resources,
-ready to be deployed. The file can be found in the `target` folder after the build completes.
+ready to be deployed. You can find the file in the `target` folder after the build completes.
 
 Once the JAR file is built, you can run it using
 `java -jar target/vaadin-jooq-template-<version>.jar`
@@ -52,14 +52,14 @@ Once the JAR file is built, you can run it using
 
 ## Security Configuration
 
-The example uses JWT authentication for better developer experience for example you don't have to re-login during development.
-Read more in the blog of [Matti Tahvonen](https://vaadin.com/blog/jwt-authentication-with-vaadin-flow-for-better-developer-and-user-experience)
+The example uses JWT authentication for a better developer experience (for example, you don't have to re-login during development).
+Read more in the blog of [Matti Tahvonen](https://vaadin.com/blog/jwt-authentication-with-vaadin-flow-for-better-developer-and-user-experience).
 
 ## Useful links
 
 ### Vaadin
 
-- Checkout the [Vaadin Developer Portal](https://vaadin.com/developers)
+- Check out the [Vaadin Developer Portal](https://vaadin.com/developers).
 - Read the documentation at [vaadin.com/docs](https://vaadin.com/docs).
 - Create new projects at [start.vaadin.com](https://start.vaadin.com/).
 - Find a collection of solutions to common use cases at [cookbook.vaadin.com](https://cookbook.vaadin.com/).
@@ -68,19 +68,19 @@ Read more in the blog of [Matti Tahvonen](https://vaadin.com/blog/jwt-authentica
 ### jOOQ
 
 - Read the documentation at [jooq.org/learn](https://www.jooq.org/learn/).
-- Browse the [Blog](https://blog.jooq.org)
+- Browse the [Blog](https://blog.jooq.org).
 
 ### Spring Boot
 
-- Explore the [Spring Boot project page](https://spring.io/projects/spring-boot/). 
+- Explore the [Spring Boot project page](https://spring.io/projects/spring-boot/).
 
 ### Testcontainers
 
- - Go to the [Testcontainers website](https://testcontainers.com). 
+- Go to the [Testcontainers website](https://testcontainers.com).
 
 ### Karibu Testing
 
-- Checkout the [GitHub project](https://github.com/mvysny/karibu-testing).
+- Check out the [GitHub project](https://github.com/mvysny/karibu-testing).
 
 ### Playwright
 

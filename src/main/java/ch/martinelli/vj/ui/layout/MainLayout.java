@@ -13,7 +13,7 @@ import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
-import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.theme.lumo.LumoIcon;
@@ -117,7 +117,10 @@ public class MainLayout extends AppLayout {
     }
 
     private String getCurrentPageTitle() {
-        var title = getContent().getClass().getAnnotation(PageTitle.class);
-        return title == null ? "" : title.value();
+        if (getContent() instanceof HasDynamicTitle hasDynamicTitle) {
+            return hasDynamicTitle.getPageTitle() == null ? "" : hasDynamicTitle.getPageTitle();
+        } else {
+            return "";
+        }
     }
 }

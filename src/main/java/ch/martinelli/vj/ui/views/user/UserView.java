@@ -209,9 +209,8 @@ public class UserView extends Div implements HasUrlParameter<String>, HasDynamic
                     }
                 } catch (ValidationException ex) {
                     Notifier.error(getTranslation("There have been validation errors!"));
-                    ex.getValidationErrors().forEach(validationResult -> {
-                        Notifier.error(validationResult.getErrorMessage());
-                    });
+                    ex.getValidationErrors().forEach(validationResult ->
+                            Notifier.error(validationResult.getErrorMessage()));
                 }
 
                 clearForm();

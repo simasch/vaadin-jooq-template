@@ -220,9 +220,8 @@ public class PersonView extends Div implements HasUrlParameter<Long>, HasDynamic
                     }
                 } catch (ValidationException ex) {
                     Notifier.error(getTranslation("There have been validation errors!"));
-                    ex.getValidationErrors().forEach(validationResult -> {
-                        Notifier.error(validationResult.getErrorMessage());
-                    });
+                    ex.getValidationErrors().forEach(validationResult ->
+                            Notifier.error(validationResult.getErrorMessage()));
                 }
 
                 clearForm();

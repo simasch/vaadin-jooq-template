@@ -206,15 +206,15 @@ public class PersonView extends Div implements HasUrlParameter<Long>, HasDynamic
         save.addClickListener(e -> {
             if (binder.validate().isOk()) {
                 try {
+                    if (person == null) {
+                        person = new PersonRecord();
+                    }
+
                     binder.writeChangedBindingsToBean(person);
 
                     try {
                         personService.save(person);
                         Notifier.success(getTranslation("Person saved"));
-
-                        if (person == null) {
-                            person = new PersonRecord();
-                        }
                     } catch (DataAccessException ex) {
                         Notifier.error(getTranslation("Person could not be saved!"));
                     }

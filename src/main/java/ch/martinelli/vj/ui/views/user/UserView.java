@@ -195,15 +195,15 @@ public class UserView extends Div implements HasUrlParameter<String>, HasDynamic
         save.addClickListener(e -> {
             if (binder.validate().isOk()) {
                 try {
+                    if (user == null) {
+                        user = new UserWithRoles();
+                    }
+
                     binder.writeChangedBindingsToBean(user);
 
                     try {
                         userService.save(user);
                         Notifier.success(getTranslation("User saved"));
-
-                        if (user == null) {
-                            user = new UserWithRoles();
-                        }
                     } catch (DataAccessException ex) {
                         Notifier.error(getTranslation("User could not be saved!"));
                     }

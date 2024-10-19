@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.1</version>
+        <version>3.3.4</version>
     </parent>
 
     <groupId>ch.martinelli.template</groupId>
@@ -16,15 +16,15 @@
 
     <properties>
         <java.version>21</java.version>
-        <vaadin.version>24.3.2</vaadin.version>
-        <jooq.version>3.19.1</jooq.version>
+        <vaadin.version>24.5.0</vaadin.version>
+        <jooq.version>3.19.13</jooq.version>
         <testcontainers-jooq-codegen-maven-plugin.version>0.0.3</testcontainers-jooq-codegen-maven-plugin.version>
-        <karibu-testing.version>2.0.2</karibu-testing.version>
-        <playwright.version>1.25.0</playwright.version>
-        <mopo.version>0.0.1</mopo.version>
-        <archunit.version>1.0.1</archunit.version>
-        <jacoco.version>0.8.11</jacoco.version>
-        <sonar.version>3.10.0.2594</sonar.version>
+        <karibu-testing.version>2.1.8</karibu-testing.version>
+        <playwright.version>1.48.0</playwright.version>
+        <mopo.version>0.0.3</mopo.version>
+        <archunit.version>1.3.0</archunit.version>
+        <jacoco.version>0.8.12</jacoco.version>
+        <sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -79,6 +79,10 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
 
         <dependency>
@@ -170,7 +174,7 @@
                         <configuration>
                             <database>
                                 <type>POSTGRES</type>
-                                <containerImage>postgres:15.2</containerImage>
+                                <containerImage>postgres:16.4</containerImage>
                             </database>
                             <flyway>
                                 <locations>filesystem:src/main/resources/db/migration</locations>
@@ -277,7 +281,7 @@
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>${sonar.version}</version>
+                <version>${sonar-maven-plugin.version}</version>
             </plugin>
         </plugins>
     </build>

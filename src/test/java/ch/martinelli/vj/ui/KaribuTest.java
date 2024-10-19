@@ -1,7 +1,7 @@
 package ch.martinelli.vj.ui;
 
 import ch.martinelli.vj.TestVjConfiguration;
-import com.github.mvysny.kaributesting.mockhttp.MockRequest;
+import com.github.mvysny.fakeservlet.FakeRequest;
 import com.github.mvysny.kaributesting.v10.MockVaadin;
 import com.github.mvysny.kaributesting.v10.Routes;
 import com.github.mvysny.kaributesting.v10.spring.MockSpringServlet;
@@ -63,7 +63,7 @@ public abstract class KaribuTest {
 
         // however, you also need to make sure that ViewAccessChecker works properly;
         // that requires a correct MockRequest.userPrincipal and MockRequest.isUserInRole()
-        var request = (MockRequest) VaadinServletRequest.getCurrent().getRequest();
+        var request = (FakeRequest) VaadinServletRequest.getCurrent().getRequest();
         request.setUserPrincipalInt(authReq);
         request.setUserInRole((principal, role) -> roles.contains(role));
     }
@@ -72,7 +72,7 @@ public abstract class KaribuTest {
         try {
             SecurityContextHolder.getContext().setAuthentication(null);
             if (VaadinServletRequest.getCurrent() != null) {
-                var request = (MockRequest) VaadinServletRequest.getCurrent().getRequest();
+                var request = (FakeRequest) VaadinServletRequest.getCurrent().getRequest();
                 request.setUserPrincipalInt(null);
                 request.setUserInRole((principal, role) -> false);
             }

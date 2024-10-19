@@ -24,6 +24,7 @@ import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.router.*;
 import io.seventytwo.vaadinjooq.util.VaadinJooqUtil;
 import jakarta.annotation.security.RolesAllowed;
@@ -32,9 +33,8 @@ import org.jooq.exception.DataAccessException;
 import static ch.martinelli.vj.db.tables.Person.PERSON;
 
 @RolesAllowed({Role.USER, Role.ADMIN})
-@PageTitle("Persons")
 @Route(value = "persons", layout = MainLayout.class)
-public class PersonView extends Div implements HasUrlParameter<Long> {
+public class PersonView extends Div implements HasUrlParameter<Long>, HasDynamicTitle {
 
     private final transient PersonService personService;
 
@@ -171,7 +171,7 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
                 .asRequired()
                 .bind(PersonRecord::getPhone, PersonRecord::setPhone);
 
-        var dateOfBirthField = new DatePicker(getTranslation("Date Of Birth"));
+        var dateOfBirthField = new DatePicker(getTranslation("Date of birth"));
         binder.forField(dateOfBirthField)
                 .asRequired()
                 .bind(PersonRecord::getDateOfBirth, PersonRecord::setDateOfBirth);
@@ -205,16 +205,24 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
 
         save.addClickListener(e -> {
             if (binder.validate().isOk()) {
-                if (person == null) {
-                    person = new PersonRecord();
-                }
-                binder.writeBeanIfValid(person);
-
                 try {
-                    personService.save(person);
-                    Notifier.success(getTranslation("Person saved"));
-                } catch (DataAccessException ex) {
-                    Notifier.error(getTranslation("Person could not be saved!"));
+                    binder.writeChangedBindingsToBean(person);
+
+                    try {
+                        personService.save(person);
+                        Notifier.success(getTranslation("Person saved"));
+
+                        if (person == null) {
+                            person = new PersonRecord();
+                        }
+                    } catch (DataAccessException ex) {
+                        Notifier.error(getTranslation("Person could not be saved!"));
+                    }
+                } catch (ValidationException ex) {
+                    Notifier.error(getTranslation("There have been validation errors!"));
+                    ex.getValidationErrors().forEach(validationResult -> {
+                        Notifier.error(validationResult.getErrorMessage());
+                    });
                 }
 
                 clearForm();
@@ -237,4 +245,8 @@ public class PersonView extends Div implements HasUrlParameter<Long> {
         grid.getDataProvider().refreshAll();
     }
 
+    @Override
+    public String getPageTitle() {
+        return getTranslation("Persons");
+    }
 }

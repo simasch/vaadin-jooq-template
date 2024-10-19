@@ -23,6 +23,7 @@ import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.router.*;
 import io.seventytwo.vaadinjooq.util.VaadinJooqUtil;
 import jakarta.annotation.security.RolesAllowed;
@@ -34,9 +35,8 @@ import java.util.Set;
 import static ch.martinelli.vj.db.tables.User.USER;
 
 @RolesAllowed(Role.ADMIN)
-@PageTitle("Users")
 @Route(value = "users", layout = MainLayout.class)
-public class UserView extends Div implements HasUrlParameter<String> {
+public class UserView extends Div implements HasUrlParameter<String>, HasDynamicTitle {
 
     private final transient UserService userService;
     private final transient PasswordEncoder passwordEncoder;
@@ -94,8 +94,9 @@ public class UserView extends Div implements HasUrlParameter<String> {
                                         refreshGrid();
                                     },
                                     getTranslation("Cancel"),
-                                    cancelEvent -> {})
-                            .open());
+                                    cancelEvent -> {
+                                    })
+                                    .open());
                     return deleteIcon;
                 })
                 .setTextAlign(ColumnTextAlign.END)
@@ -193,16 +194,24 @@ public class UserView extends Div implements HasUrlParameter<String> {
 
         save.addClickListener(e -> {
             if (binder.validate().isOk()) {
-                if (user == null) {
-                    user = new UserWithRoles();
-                }
-                binder.writeBeanIfValid(user);
-
                 try {
-                    userService.save(user);
-                    Notifier.success(getTranslation("User saved"));
-                } catch (DataAccessException ex) {
-                    Notifier.error(getTranslation("User could not be saved!"));
+                    binder.writeChangedBindingsToBean(user);
+
+                    try {
+                        userService.save(user);
+                        Notifier.success(getTranslation("User saved"));
+
+                        if (user == null) {
+                            user = new UserWithRoles();
+                        }
+                    } catch (DataAccessException ex) {
+                        Notifier.error(getTranslation("User could not be saved!"));
+                    }
+                } catch (ValidationException ex) {
+                    Notifier.error(getTranslation("There have been validation errors!"));
+                    ex.getValidationErrors().forEach(validationResult -> {
+                        Notifier.error(validationResult.getErrorMessage());
+                    });
                 }
 
                 clearForm();
@@ -225,4 +234,8 @@ public class UserView extends Div implements HasUrlParameter<String> {
         grid.getDataProvider().refreshAll();
     }
 
+    @Override
+    public String getPageTitle() {
+        return getTranslation("Users");
+    }
 }

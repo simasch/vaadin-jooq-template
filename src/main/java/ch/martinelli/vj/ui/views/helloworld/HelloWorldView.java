@@ -6,16 +6,15 @@ import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-@PageTitle("Hello World")
 @Route(value = "hello", layout = MainLayout.class)
 @RouteAlias(value = "", layout = MainLayout.class)
 @AnonymousAllowed
-public class HelloWorldView extends HorizontalLayout {
+public class HelloWorldView extends HorizontalLayout implements HasDynamicTitle {
 
     public HelloWorldView() {
         setMargin(true);
@@ -33,4 +32,8 @@ public class HelloWorldView extends HorizontalLayout {
         setVerticalComponentAlignment(Alignment.END, name, sayHello);
     }
 
+    @Override
+    public String getPageTitle() {
+        return getTranslation("Hello World");
+    }
 }

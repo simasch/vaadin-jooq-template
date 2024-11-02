@@ -1,5 +1,7 @@
 # Vaadin/jOOQ Template
 
+**This repo has been moved to [https://github.com/martinellich/vaadin-jooq-template](https://github.com/martinellich/vaadin-jooq-template)**
+
 ## Introduction
 
 This is a template project that shows how to integrate [Vaadin](https://vaadin.com) and [jOOQ](https://jooq.org) 
